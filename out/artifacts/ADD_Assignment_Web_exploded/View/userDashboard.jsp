@@ -297,6 +297,12 @@
 </head>
 <body>
 <div class="container">
+    <% String msg = (String) request.getAttribute("msg");
+        if (msg != null) { %>
+    <script>
+        alert("<%= msg %>");
+    </script>
+    <% } %>
     <!-- Header Section -->
     <div class="header">
         <h1>🎯 User Dashboard</h1>
@@ -306,6 +312,9 @@
     <div class="main-content">
         <!-- Welcome Message -->
         <div class="welcome-message">
+            <div class="user-info">
+                Welcome, <%= session.getAttribute("username") != null ? session.getAttribute("username") : "Employee" %>
+            </div>
             <h3>👋 Welcome back!</h3>
             <p>You can submit new complaints and manage your existing ones from this dashboard.</p>
         </div>
@@ -313,7 +322,7 @@
         <!-- Complaint Form Section -->
         <div class="form-section">
             <h2>📝 Submit New Complaint</h2>
-            <form action="complaint" method="post">
+            <form action="${pageContext.request.contextPath}/employee" method="post">
                 <div class="form-group">
                     <label for="title">📋 Complaint Title:</label>
                     <input type="text" id="title" name="title" placeholder="Enter complaint title..." required>

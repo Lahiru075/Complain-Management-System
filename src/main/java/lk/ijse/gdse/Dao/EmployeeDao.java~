@@ -1,0 +1,31 @@
+package lk.ijse.gdse.Dao;
+
+import lk.ijse.gdse.Model.EmployeeModel;
+
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class EmployeeDao {
+    private DataSource dataSource;
+
+    public EmployeeDao(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    public int saveComplain(EmployeeModel complainModel) throws SQLException {
+        Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO complaints (user_id, title, description) VALUES (?, ?, ?)");
+        preparedStatement.setString(1, complainModel.getUser_id());
+        preparedStatement.setString(2, complainModel.getTitle());
+        preparedStatement.setString(3, complainModel.getDescription());
+        int result = preparedStatement.executeUpdate();
+
+        if (result > 0) {
+            return 1;
+        }else {
+            return 0;
+        }
+    }
+}

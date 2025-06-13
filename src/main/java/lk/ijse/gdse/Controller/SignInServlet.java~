@@ -32,14 +32,12 @@ public class SignInServlet extends HttpServlet {
 
             ResultSet resultSet = new UserDao(this.dataSource).signIn(username, password);
 
+            String user_id = resultSet.getString("user_id");
+
+            HttpSession session = req.getSession();
+            session.setAttribute("user_id", user_id);
 
             if (resultSet.next()) {
-
-                String user_id = resultSet.getString("user_id");
-
-                HttpSession session = req.getSession();
-                session.setAttribute("user_id", user_id);
-
                 String role = resultSet.getString("role");
                 req.getSession().setAttribute("username", username);
                 if ("ADMIN".equals(role)) {
