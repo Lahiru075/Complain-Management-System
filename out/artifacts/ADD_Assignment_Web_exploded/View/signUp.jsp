@@ -74,9 +74,10 @@
     <%
         }
     %>
-    <form action="signup" method="post">
-        <input type="text" name="username" placeholder="Username" required />
+    <form action="<%= request.getContextPath() %>/signup" method="post">
+    <input type="text" name="username" placeholder="Username" required />
         <input type="password" name="password" placeholder="Password" required />
+        <input type="text" name="full_name" placeholder="Name" required />
         <select name="role" required>
             <option value="" disabled selected>Select Role</option>
             <option value="Employee">Employee</option>

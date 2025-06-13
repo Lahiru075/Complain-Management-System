@@ -22,21 +22,32 @@ public class SignUpServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
+
+            System.out.println("lksjdf;ajdf;lkajsd;flkjas;ldkfjas;ldkfj;d");
+
             String username = req.getParameter("username");
             String password = req.getParameter("password");
             String role = req.getParameter("role");
+            String full_name = req.getParameter("full_name");
 
             Connection connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users (username, password, role) VALUES (?, ?, ?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users (username, password, role, full_name) VALUES (?, ?, ?, ?)");
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, role);
+            preparedStatement.setString(4, full_name);
             preparedStatement.executeUpdate();
-            resp.sendRedirect("signIn.jsp?success=true");
+            resp.sendRedirect(req.getContextPath() + "/View/signIn.jsp?success=true");
+
+            System.out.println(req.getContextPath());
+
 
         } catch (SQLException e) {
             e.printStackTrace();
-            resp.sendRedirect("signUp.jsp?error=true");
+            resp.sendRedirect(req.getContextPath() + "/View/signUp.jsp?success=true");
+
+            System.out.println(req.getContextPath());
+
         }
     }
 }

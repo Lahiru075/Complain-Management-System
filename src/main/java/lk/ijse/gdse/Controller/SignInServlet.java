@@ -37,16 +37,16 @@ public class SignInServlet extends HttpServlet {
                 String role = resultSet.getString("role");
                 req.getSession().setAttribute("username", username);
                 if ("ADMIN".equals(role)) {
-                    resp.sendRedirect("adminDashboard.jsp?success=true");
+                    resp.sendRedirect("View/adminDashboard.jsp?success=true");
                 } else {
-                    resp.sendRedirect("userDashboard.jsp?success=true");
+                    resp.sendRedirect("View/userDashboard.jsp?success=true");
                 }
             } else {
-                resp.sendRedirect("signIn.jsp?error=true");
+                resp.sendRedirect("View/signIn.jsp?error=true");
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            resp.sendRedirect("signIn.jsp?error=true");
+            resp.sendRedirect("View/signIn.jsp?error=true");
         }
     }
 }
