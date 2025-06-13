@@ -37,7 +37,7 @@ public class SignUpServlet extends HttpServlet {
             preparedStatement.executeUpdate();
 //            resp.sendRedirect(req.getContextPath() + "/View/signIn.jsp?success=true");
 
-            req.getRequestDispatcher("View/signIn.jsp?success=true").forward(req,resp);
+            req.getRequestDispatcher("view/signIn.jsp?success=true").forward(req,resp);
 
             System.out.println(req.getContextPath());
 
@@ -45,7 +45,7 @@ public class SignUpServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
 //            resp.sendRedirect(req.getContextPath() + "/View/signUp.jsp?success=true");
-            req.getRequestDispatcher("View/signUp.jsp?error=true").forward(req,resp);
+            req.getRequestDispatcher("view/signUp.jsp?error=true").forward(req,resp);
 
         }
     }
