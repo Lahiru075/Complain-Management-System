@@ -69,14 +69,14 @@
     <div class="message" style="color: green;">Successfully signed up! Please login.</div>
     <%
         }
-//        String error = request.getParameter("error");
-//        if ("true".equals(error)) {
+        String error = request.getParameter("error");
+        if ("true".equals(error)) {
     %>
-<%--    <div class="message" style="color: red;">Invalid username or password.</div>--%>
-<%--    <%--%>
-<%--        }--%>
-<%--    %>--%>
-<%--    <form action="<%= request.getContextPath() %>/signin" method="post">--%>
+    <div class="message" style="color: red;">Invalid username or password.</div>
+    <%
+        }
+    %>
+    <form action="<%= request.getContextPath() %>/signin" method="post">
     <form action="${pageContext.request.contextPath}/signin" method="post">
         <input type="text" name="username" placeholder="Username" required />
         <input type="password" name="password" placeholder="Password" required />
