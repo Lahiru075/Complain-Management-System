@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lk.ijse.gdse.Dao.UserDao;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -27,11 +28,7 @@ public class SignInServlet extends HttpServlet {
             String username = req.getParameter("username");
             String password = req.getParameter("password");
 
-            Connection connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users WHERE username = ? AND password = ?");
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = new UserDao(this.dataSource).signIn(username, password);
 
             if (resultSet.next()) {
                 String role = resultSet.getString("role");

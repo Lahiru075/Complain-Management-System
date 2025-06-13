@@ -34,7 +34,7 @@ public class SignUpServlet extends HttpServlet {
             userModel.setRole(role);
             userModel.setFull_name(full_name);
 
-            int result = new UserDao(this.dataSource).saveUser(userModel);
+            int result = new UserDao(this.dataSource).signUp(userModel);
 
             if (result > 0) {
                 req.getRequestDispatcher("View/signIn.jsp?success=true").forward(req,resp);
