@@ -6,11 +6,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lk.ijse.gdse.Dao.UserDao;
+import lk.ijse.gdse.Model.UserModel;
 
 import javax.sql.DataSource;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 @WebServlet("/signup")
@@ -28,18 +28,20 @@ public class SignUpServlet extends HttpServlet {
             String role = req.getParameter("role");
             String full_name = req.getParameter("full_name");
 
-            Connection connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users (username, password, role, full_name) VALUES (?, ?, ?, ?)");
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
-            preparedStatement.setString(3, role);
-            preparedStatement.setString(4, full_name);
-            preparedStatement.executeUpdate();
-//            resp.sendRedirect(req.getContextPath() + "/View/signIn.jsp?success=true");
+            UserModel userModel = new UserModel();
+            userModel.setUsername(username);
+            userModel.setPassword(password);
+            userModel.setRole(role);
+            userModel.setFull_name(full_name);
 
-            req.getRequestDispatcher("View/signIn.jsp?success=true").forward(req,resp);
+            int result = new UserDao(this.dataSource).saveUser(userModel);
 
-            System.out.println(req.getContextPath());
+            if (result > 0) {
+                req.getRequestDispatcher("View/signIn.jsp?success=true").forward(req,resp);
+            } else {
+                req.getRequestDispatcher("View/signUp.jsp?error=true").forward(req,resp);
+            }
+
 
 
         } catch (SQLException e) {

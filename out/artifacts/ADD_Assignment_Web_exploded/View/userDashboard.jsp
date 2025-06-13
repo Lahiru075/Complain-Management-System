@@ -361,42 +361,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <%-- Sample data - Replace with actual JSP code to fetch from database --%>
-                    <tr onclick="selectComplaint(1, 'Water Supply Issue', 'No water supply for 3 days in our area')">
-                        <td>1</td>
-                        <td>USER001</td>
-                        <td>Water Supply Issue</td>
-                        <td>No water supply for 3 days in our area</td>
-                        <td><span class="status status-pending">Pending</span></td>
-                        <td>2025-06-10 10:30 AM</td>
-                        <td>2025-06-10 10:30 AM</td>
-                    </tr>
-                    <tr onclick="selectComplaint(2, 'Road Repair', 'Main road has several potholes that need immediate attention')">
-                        <td>2</td>
-                        <td>USER001</td>
-                        <td>Road Repair</td>
-                        <td>Main road has several potholes that need immediate attention</td>
-                        <td><span class="status status-in-progress">In Progress</span></td>
-                        <td>2025-06-09 02:15 PM</td>
-                        <td>2025-06-11 09:20 AM</td>
-                    </tr>
-                    <tr onclick="selectComplaint(3, 'Garbage Collection', 'Garbage not collected for over a week')">
-                        <td>3</td>
-                        <td>USER001</td>
-                        <td>Garbage Collection</td>
-                        <td>Garbage not collected for over a week</td>
-                        <td><span class="status status-resolved">Resolved</span></td>
-                        <td>2025-06-08 11:45 AM</td>
-                        <td>2025-06-12 03:30 PM</td>
-                    </tr>
-                    <%-- If no complaints exist, show this message --%>
-                    <%--
-                    <tr>
-                        <td colspan="8" class="no-data">
-                            📭 No complaints found. Submit your first complaint above!
-                        </td>
-                    </tr>
-                    --%>
+
                     </tbody>
                 </table>
             </div>
