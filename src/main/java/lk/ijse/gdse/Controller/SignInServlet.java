@@ -49,6 +49,9 @@ public class SignInServlet extends HttpServlet {
 //                    resp.sendRedirect(req.getContextPath() + "/View/userDashboard.jsp?success=true");
                     req.getRequestDispatcher("View/userDashboard.jsp?success=true").forward(req,resp);
                 }
+
+
+
             } else {
 //                resp.sendRedirect(req.getContextPath() + "/View/signIn.jsp?error=true");
                 req.getRequestDispatcher("View/signIn.jsp?error=true").forward(req,resp);

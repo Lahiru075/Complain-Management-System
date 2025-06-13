@@ -7,6 +7,13 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.*" %>
+<%@ page import="lk.ijse.gdse.Dao.EmployeeDao" %>
+<%@ page import="lk.ijse.gdse.Model.EmployeeModel" %>
+<%@ page import="jakarta.annotation.Resource" %>
+<%@ page import="javax.sql.DataSource" %>
+<%@ page import="javax.naming.InitialContext" %>
+<%@ page import="javax.xml.transform.Result" %>
+<%@ page import="java.sql.ResultSet" %>
 <html>
 <head>
     <title>User Dashboard - Complaint Management System</title>
@@ -297,6 +304,7 @@
 </head>
 <body>
 <div class="container">
+
     <% String msg = (String) request.getAttribute("msg");
         if (msg != null) { %>
     <script>
@@ -371,10 +379,34 @@
                     </thead>
                     <tbody>
 
+                    <%
+                        List<EmployeeModel> complaintList = (List<EmployeeModel>) request.getAttribute("complains");
+                        if (complaintList != null && !complaintList.isEmpty()) {
+                            for (EmployeeModel c : complaintList) {
+                    %>
+                    <tr>
+                        <td><%= c.getComplain_id() %></td>
+                        <td><%= c.getUser_id() %></td>
+                        <td><%= c.getTitle() %></td>
+                        <td><%= c.getDescription() %></td>
+                        <td><%= c.getStatus() %></td>
+                        <td><%= c.getCreated_at() %></td>
+                        <td><%= c.getUpdated_at() %></td>
+                    </tr>
+                    <%
+                        }
+                    } else {
+                    %>
+                    <tr><td colspan="7">No complaints found.</td></tr>
+                    <%
+                        }
+                    %>
                     </tbody>
                 </table>
+
             </div>
         </div>
+
     </div>
 </div>
 
