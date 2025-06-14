@@ -17,7 +17,7 @@ public class EmployeeDao {
         this.dataSource = dataSource;
     }
 
-    public int saveComplain(EmployeeModel complainModel) throws SQLException {
+    public int saveComplaint(EmployeeModel complainModel) throws SQLException {
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO complaints (user_id, title, description) VALUES (?, ?, ?)");
         preparedStatement.setInt(1, complainModel.getUser_id());
@@ -32,13 +32,15 @@ public class EmployeeDao {
         }
     }
 
-    public List<EmployeeModel> getAllComplains() throws SQLException {
+    public List<EmployeeModel> getAllComplains(int userId) throws SQLException {
         List<EmployeeModel> complaints = new ArrayList<>();
-        String sql = "SELECT * FROM complaints";
 
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+        try (Connection connection = dataSource.getConnection()) {
+
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM complaints WHERE user_id = ?");
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 EmployeeModel complain = new EmployeeModel();
@@ -54,5 +56,27 @@ public class EmployeeDao {
             }
         }
         return complaints;
+    }
+
+    public int updateComplaint(EmployeeModel employeeModel) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE complaints SET title = ?, description = ? WHERE complaint_id = ?")) {
+            preparedStatement.setString(1, employeeModel.getTitle());
+            preparedStatement.setString(2, employeeModel.getDescription());
+            preparedStatement.setInt(3, employeeModel.getComplain_id());
+            return preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int deleteComplaint(int complaintId) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM complaints WHERE complaint_id = ?")) {
+            preparedStatement.setInt(1, complaintId);
+            return preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

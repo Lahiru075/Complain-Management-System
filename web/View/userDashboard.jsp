@@ -332,6 +332,7 @@
             <h2>📝 Submit New Complaint</h2>
             <form action="${pageContext.request.contextPath}/employee" method="post">
                 <div class="form-group">
+                    <input type="hidden" name="complaint_id" id="complaint_id" value="">
                     <label for="title">📋 Complaint Title:</label>
                     <input type="text" id="title" name="title" placeholder="Enter complaint title..." required>
                 </div>
@@ -342,13 +343,13 @@
                 </div>
 
                 <div class="button-group">
-                    <button type="submit" name="action" value="add" class="btn btn-primary">
+                    <button type="submit" name="action" value="add" id="addBtn" class="btn btn-primary">
                         ➕ Add Complaint
                     </button>
-                    <button type="submit" name="action" value="update" class="btn btn-warning">
+                    <button type="submit" name="action" value="update" id="updateBtn" class="btn btn-warning">
                         ✏️ Update Complaint
                     </button>
-                    <button type="submit" name="action" value="delete" class="btn btn-danger">
+                    <button type="submit" name="action" value="delete" id="deleteBtn" class="btn btn-danger">
                         🗑️ Delete Complaint
                     </button>
                     <button type="button" onclick="clearForm()" class="btn btn-secondary">
@@ -384,7 +385,7 @@
                         if (complaintList != null && !complaintList.isEmpty()) {
                             for (EmployeeModel c : complaintList) {
                     %>
-                    <tr>
+                    <tr onclick="selectComplaint('<%= c.getComplain_id() %>', '<%= c.getTitle() %>', '<%= c.getDescription() %>')">
                         <td><%= c.getComplain_id() %></td>
                         <td><%= c.getUser_id() %></td>
                         <td><%= c.getTitle() %></td>
@@ -416,6 +417,14 @@
         document.getElementById('title').value = '';
         document.getElementById('description').value = '';
         document.getElementById('complaintId').value = '';
+    }
+
+    function selectComplaint(id, title, description) {
+        document.getElementById('complaint_id').value = id;
+        document.getElementById('title').value = title;
+        document.getElementById('description').value = description;
+        document.getElementById('updateBtn').disabled = false;
+        document.getElementById('deleteBtn').disabled = false;
     }
 
 </script>

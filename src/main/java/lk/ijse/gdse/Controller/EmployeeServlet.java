@@ -26,73 +26,103 @@ public class EmployeeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        System.out.println("This is post method");
-
-        try {
-
-            String title = req.getParameter("title");
-            String description = req.getParameter("description");
-
-            EmployeeModel complainModel = new EmployeeModel();
-            complainModel.setTitle(title);
-            complainModel.setDescription(description);
-            String userIdStr = (String) req.getSession().getAttribute("user_id");
-            int userId = Integer.parseInt(userIdStr);
-            complainModel.setUser_id(userId);
-
-            int result = new EmployeeDao(this.dataSource).saveComplain(complainModel);
-
-            if (result > 0) {
-                req.setAttribute("msg", "Complain saved successfully!");
-            } else {
-                req.setAttribute("msg", "Failed to save complain!");
-            }
-
-//            req.getRequestDispatcher("View/userDashboard.jsp?success=true").forward(req,resp);
-            resp.sendRedirect("employee");
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-//    @Override
-//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        List<EmployeeModel> complaints = new ArrayList<>();
-//
-//        System.out.println("This is get method");
+//        System.out.println("This is post method");
 //
 //        try {
-//            ResultSet resultSet = new EmployeeDao(this.dataSource).getAllComplains();
 //
-//            while (resultSet.next()) {
-//                EmployeeModel complain = new EmployeeModel();
-//                complain.setComplain_id(resultSet.getInt("complaint_id"));
-//                complain.setUser_id(resultSet.getInt("user_id"));
-//                complain.setTitle(resultSet.getString("title"));
-//                complain.setDescription(resultSet.getString("description"));
-//                complain.setStatus(resultSet.getString("status"));
-//                complain.setCreated_at(resultSet.getString("created_at"));
-//                complain.setUpdated_at(resultSet.getString("updated_at"));
+//            String title = req.getParameter("title");
+//            String description = req.getParameter("description");
 //
-//                complaints.add(complain);
+//            EmployeeModel complainModel = new EmployeeModel();
+//            complainModel.setTitle(title);
+//            complainModel.setDescription(description);
+//            String userIdStr = (String) req.getSession().getAttribute("user_id");
+//            int userId = Integer.parseInt(userIdStr);
+//            complainModel.setUser_id(userId);
+//
+//            int result = new EmployeeDao(this.dataSource).saveComplain(complainModel);
+//
+//            if (result > 0) {
+//                req.setAttribute("msg", "Complain saved successfully!");
+//            } else {
+//                req.setAttribute("msg", "Failed to save complain!");
 //            }
 //
-//            req.setAttribute("complains", complaints);
-//            req.getRequestDispatcher("View/userDashboard.jsp").forward(req,resp);
+////            req.getRequestDispatcher("View/userDashboard.jsp?success=true").forward(req,resp);
+//            resp.sendRedirect("employee");
 //
 //        } catch (SQLException e) {
 //            throw new RuntimeException(e);
 //        }
-//
-//    }
+
+        String action = req.getParameter("action");
+
+        try {
+            EmployeeDao employeeDao = new EmployeeDao(dataSource);
+            String userIdStr = (String) req.getSession().getAttribute("user_id");
+            int userId = Integer.parseInt(userIdStr);
+
+            if ("add".equals(action)) {
+                String title = req.getParameter("title");
+                String description = req.getParameter("description");
+
+                EmployeeModel employeeModel = new EmployeeModel();
+                employeeModel.setTitle(title);
+                employeeModel.setDescription(description);
+                employeeModel.setUser_id(userId);
+
+                int result = employeeDao.saveComplaint(employeeModel);
+                if (result > 0) {
+                    req.setAttribute("message", "Complain added successfully");
+                } else {
+                    req.setAttribute("message", "Failed to add complaint");
+                }
+            } else if ("update".equals(action)) {
+                int complaintId = Integer.parseInt(req.getParameter("complaint_id"));
+                String title = req.getParameter("title");
+                String description = req.getParameter("description");
+
+                EmployeeModel employeeModel = new EmployeeModel();
+                employeeModel.setComplain_id(complaintId);
+                employeeModel.setTitle(title);
+                employeeModel.setDescription(description);
+                employeeModel.setUser_id(userId);
+
+                int result = employeeDao.updateComplaint(employeeModel);
+                if (result > 0) {
+                    req.setAttribute("message", "Complaint updated successfully");
+                } else {
+                    req.setAttribute("message", "Failed to update complaint");
+                }
+            } else if ("delete".equals(action)) {
+                int complaintId = Integer.parseInt(req.getParameter("complaint_id"));
+                int result = employeeDao.deleteComplaint(complaintId);
+                if (result > 0) {
+                    req.setAttribute("message", "Complaint deleted successfully");
+                } else {
+                    req.setAttribute("message", "Failed to delete complaint");
+                }
+            }
+
+            resp.sendRedirect("employee");
+
+        } catch (SQLException e) {
+            throw new ServletException("Database error: " + e.getMessage(), e);
+        }
+
+
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("This is get method");
 
+        String userIdStr = (String) req.getSession().getAttribute("user_id");
+        int userId = Integer.parseInt(userIdStr);
+
+
         try {
-            List<EmployeeModel> complaints = new EmployeeDao(this.dataSource).getAllComplains();
+            List<EmployeeModel> complaints = new EmployeeDao(this.dataSource).getAllComplains(userId);
 
             req.setAttribute("complains", complaints);
             req.getRequestDispatcher("View/userDashboard.jsp").forward(req, resp);

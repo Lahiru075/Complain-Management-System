@@ -342,13 +342,13 @@
                 </div>
 
                 <div class="button-group">
-                    <button type="submit" name="action" value="add" class="btn btn-primary">
+                    <button type="submit" name="action" value="add" id="addBtn" class="btn btn-primary">
                         ➕ Add Complaint
                     </button>
-                    <button type="submit" name="action" value="update" class="btn btn-warning">
+                    <button type="submit" name="action" value="update" id="updateBtn" class="btn btn-warning">
                         ✏️ Update Complaint
                     </button>
-                    <button type="submit" name="action" value="delete" class="btn btn-danger">
+                    <button type="submit" name="action" value="delete" id="deleteBtn" class="btn btn-danger">
                         🗑️ Delete Complaint
                     </button>
                     <button type="button" onclick="clearForm()" class="btn btn-secondary">
@@ -365,68 +365,44 @@
         <div class="table-section">
             <h2>📊 My Complaints</h2>
             <div class="table-container">
-<%--                <table>--%>
-<%--                    <thead>--%>
-<%--                    <tr>--%>
-<%--                        <th>🆔 ID</th>--%>
-<%--                        <th>👤 User ID</th>--%>
-<%--                        <th>📋 Title</th>--%>
-<%--                        <th>📄 Description</th>--%>
-<%--                        <th>📊 Status</th>--%>
-<%--                        <th>📅 Created At</th>--%>
-<%--                        <th>🔄 Updated At</th>--%>
-<%--                    </tr>--%>
-<%--                    </thead>--%>
-<%--                    <tbody>--%>
-
-<%--                    <%--%>
-<%--                        List<EmployeeModel> complaintList = (List<EmployeeModel>) request.getAttribute("complains");--%>
-<%--                        if (complaintList != null && !complaintList.isEmpty()) {--%>
-<%--                            for (EmployeeModel c : complaintList) {--%>
-<%--                    %>--%>
-<%--                    <tr>--%>
-<%--                        <td><%= c.getComplain_id() %></td>--%>
-<%--                        <td><%= c.getUser_id() %></td>--%>
-<%--                        <td><%= c.getTitle() %></td>--%>
-<%--                        <td><%= c.getDescription() %></td>--%>
-<%--                        <td><%= c.getStatus() %></td>--%>
-<%--                        <td><%= c.getCreated_at() %></td>--%>
-<%--                        <td><%= c.getUpdated_at() %></td>--%>
-<%--                    </tr>--%>
-<%--                    <%--%>
-<%--                        }--%>
-<%--                    } else {--%>
-<%--                    %>--%>
-<%--                    <tr><td colspan="7">No complaints found.</td></tr>--%>
-<%--                    <%--%>
-<%--                        }--%>
-<%--                    %>--%>
-<%--                    </tbody>--%>
-<%--                </table>--%>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>🆔 ID</th>
+                        <th>👤 User ID</th>
+                        <th>📋 Title</th>
+                        <th>📄 Description</th>
+                        <th>📊 Status</th>
+                        <th>📅 Created At</th>
+                        <th>🔄 Updated At</th>
+                    </tr>
+                    </thead>
                     <tbody>
-                        <%
-                            List<EmployeeModel> complaintList = (List<EmployeeModel>) request.getAttribute("complains");
-                            if (complaintList != null && !complaintList.isEmpty()) {
-                                for (EmployeeModel c : complaintList) {
-                        %>
-                        <tr>
-                            <td><%= c.getComplain_id() %></td>
-                            <td><%= c.getUser_id() %></td>
-                            <td><%= c.getTitle() %></td>
-                            <td><%= c.getDescription() %></td>
-                            <td><%= c.getStatus() %></td>
-                            <td><%= c.getCreated_at() %></td>
-                            <td><%= c.getUpdated_at() %></td>
-                        </tr>
-                        <%
-                            }
-                        } else {
-                        %>
-                        <tr><td colspan="7">No complaints found.</td></tr>
-                        <%
-                            }
-                        %>
+
+                    <%
+                        List<EmployeeModel> complaintList = (List<EmployeeModel>) request.getAttribute("complains");
+                        if (complaintList != null && !complaintList.isEmpty()) {
+                            for (EmployeeModel c : complaintList) {
+                    %>
+                    <tr onclick="selectComplaint('<%= c.getComplain_id() %>', '<%= c.getTitle() %>', '<%= c.getDescription() %>')">
+                        <td><%= c.getComplain_id() %></td>
+                        <td><%= c.getUser_id() %></td>
+                        <td><%= c.getTitle() %></td>
+                        <td><%= c.getDescription() %></td>
+                        <td><%= c.getStatus() %></td>
+                        <td><%= c.getCreated_at() %></td>
+                        <td><%= c.getUpdated_at() %></td>
+                    </tr>
+                    <%
+                        }
+                    } else {
+                    %>
+                    <tr><td colspan="7">No complaints found.</td></tr>
+                    <%
+                        }
+                    %>
                     </tbody>
+                </table>
 
             </div>
         </div>
@@ -440,6 +416,14 @@
         document.getElementById('title').value = '';
         document.getElementById('description').value = '';
         document.getElementById('complaintId').value = '';
+    }
+
+    function selectComplaint(id, title, description) {
+        document.getElementById('complaint_id').value = id;
+        document.getElementById('title').value = title;
+        document.getElementById('description').value = description;
+        document.getElementById('updateBtn').disabled = false;
+        document.getElementById('deleteBtn').disabled = false;
     }
 
 </script>
