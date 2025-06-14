@@ -14,6 +14,8 @@
 <%@ page import="javax.naming.InitialContext" %>
 <%@ page import="javax.xml.transform.Result" %>
 <%@ page import="java.sql.ResultSet" %>
+
+
 <html>
 <head>
     <title>User Dashboard - Complaint Management System</title>
@@ -305,12 +307,17 @@
 <body>
 <div class="container">
 
-    <% String msg = (String) request.getAttribute("msg");
-        if (msg != null) { %>
+    <%
+        String msg = (String) session.getAttribute("msg");
+        if (msg != null) {
+    %>
     <script>
         alert("<%= msg %>");
     </script>
-    <% } %>
+    <%
+            session.removeAttribute("msg");
+        }
+    %>
     <!-- Header Section -->
     <div class="header">
         <h1>🎯 User Dashboard</h1>
@@ -332,6 +339,7 @@
             <h2>📝 Submit New Complaint</h2>
             <form action="${pageContext.request.contextPath}/employee" method="post">
                 <div class="form-group">
+                    <input type="hidden" name="complaint_id" id="complaint_id" value="">
                     <label for="title">📋 Complaint Title:</label>
                     <input type="text" id="title" name="title" placeholder="Enter complaint title..." required>
                 </div>
@@ -370,6 +378,7 @@
                     <tr>
                         <th>🆔 ID</th>
                         <th>👤 User ID</th>
+                        <th>✏ Remark</th>
                         <th>📋 Title</th>
                         <th>📄 Description</th>
                         <th>📊 Status</th>
@@ -387,6 +396,7 @@
                     <tr onclick="selectComplaint('<%= c.getComplain_id() %>', '<%= c.getTitle() %>', '<%= c.getDescription() %>')">
                         <td><%= c.getComplain_id() %></td>
                         <td><%= c.getUser_id() %></td>
+                        <td><%= c.getRemark() %></td>
                         <td><%= c.getTitle() %></td>
                         <td><%= c.getDescription() %></td>
                         <td><%= c.getStatus() %></td>
@@ -411,7 +421,9 @@
 </div>
 
 <script>
-    // JavaScript for form validation and interaction
+
+
+
     function clearForm() {
         document.getElementById('title').value = '';
         document.getElementById('description').value = '';

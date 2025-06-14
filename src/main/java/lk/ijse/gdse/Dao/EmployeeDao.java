@@ -1,6 +1,6 @@
 package lk.ijse.gdse.Dao;
 
-import lk.ijse.gdse.Model.EmployeeModel;
+import lk.ijse.gdse.Model.EmployeeAndAdminModel;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -17,7 +17,7 @@ public class EmployeeDao {
         this.dataSource = dataSource;
     }
 
-    public int saveComplaint(EmployeeModel complainModel) throws SQLException {
+    public int saveComplaint(EmployeeAndAdminModel complainModel) throws SQLException {
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO complaints (user_id, title, description) VALUES (?, ?, ?)");
         preparedStatement.setInt(1, complainModel.getUser_id());
@@ -32,8 +32,8 @@ public class EmployeeDao {
         }
     }
 
-    public List<EmployeeModel> getAllComplains(int userId) throws SQLException {
-        List<EmployeeModel> complaints = new ArrayList<>();
+    public List<EmployeeAndAdminModel> getAllComplains(int userId) throws SQLException {
+        List<EmployeeAndAdminModel> complaints = new ArrayList<>();
 
 
         try (Connection connection = dataSource.getConnection()) {
@@ -43,7 +43,7 @@ public class EmployeeDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                EmployeeModel complain = new EmployeeModel();
+                EmployeeAndAdminModel complain = new EmployeeAndAdminModel();
                 complain.setComplain_id(resultSet.getInt("complaint_id"));
                 complain.setUser_id(resultSet.getInt("user_id"));
                 complain.setTitle(resultSet.getString("title"));
@@ -51,6 +51,7 @@ public class EmployeeDao {
                 complain.setStatus(resultSet.getString("status"));
                 complain.setCreated_at(resultSet.getString("created_at"));
                 complain.setUpdated_at(resultSet.getString("updated_at"));
+                complain.setRemark(resultSet.getString("remark"));
 
                 complaints.add(complain);
             }
@@ -58,7 +59,7 @@ public class EmployeeDao {
         return complaints;
     }
 
-    public int updateComplaint(EmployeeModel employeeModel) {
+    public int updateComplaint(EmployeeAndAdminModel employeeModel) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("UPDATE complaints SET title = ?, description = ? WHERE complaint_id = ?")) {
             preparedStatement.setString(1, employeeModel.getTitle());

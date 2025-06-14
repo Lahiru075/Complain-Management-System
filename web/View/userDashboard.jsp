@@ -8,12 +8,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.*" %>
 <%@ page import="lk.ijse.gdse.Dao.EmployeeDao" %>
-<%@ page import="lk.ijse.gdse.Model.EmployeeModel" %>
+<%@ page import="lk.ijse.gdse.Model.EmployeeAndAdminModel" %>
 <%@ page import="jakarta.annotation.Resource" %>
 <%@ page import="javax.sql.DataSource" %>
 <%@ page import="javax.naming.InitialContext" %>
 <%@ page import="javax.xml.transform.Result" %>
 <%@ page import="java.sql.ResultSet" %>
+
+
 <html>
 <head>
     <title>User Dashboard - Complaint Management System</title>
@@ -305,12 +307,17 @@
 <body>
 <div class="container">
 
-    <% String msg = (String) request.getAttribute("msg");
-        if (msg != null) { %>
+    <%
+        String msg = (String) session.getAttribute("msg");
+        if (msg != null) {
+    %>
     <script>
         alert("<%= msg %>");
     </script>
-    <% } %>
+    <%
+            session.removeAttribute("msg");
+        }
+    %>
     <!-- Header Section -->
     <div class="header">
         <h1>🎯 User Dashboard</h1>
@@ -371,6 +378,7 @@
                     <tr>
                         <th>🆔 ID</th>
                         <th>👤 User ID</th>
+                        <th>✏ Remark</th>
                         <th>📋 Title</th>
                         <th>📄 Description</th>
                         <th>📊 Status</th>
@@ -381,13 +389,14 @@
                     <tbody>
 
                     <%
-                        List<EmployeeModel> complaintList = (List<EmployeeModel>) request.getAttribute("complains");
+                        List<EmployeeAndAdminModel> complaintList = (List<EmployeeAndAdminModel>) request.getAttribute("complains");
                         if (complaintList != null && !complaintList.isEmpty()) {
-                            for (EmployeeModel c : complaintList) {
+                            for (EmployeeAndAdminModel c : complaintList) {
                     %>
                     <tr onclick="selectComplaint('<%= c.getComplain_id() %>', '<%= c.getTitle() %>', '<%= c.getDescription() %>')">
                         <td><%= c.getComplain_id() %></td>
                         <td><%= c.getUser_id() %></td>
+                        <td><%= c.getRemark() %></td>
                         <td><%= c.getTitle() %></td>
                         <td><%= c.getDescription() %></td>
                         <td><%= c.getStatus() %></td>
@@ -412,7 +421,9 @@
 </div>
 
 <script>
-    // JavaScript for form validation and interaction
+
+
+
     function clearForm() {
         document.getElementById('title').value = '';
         document.getElementById('description').value = '';

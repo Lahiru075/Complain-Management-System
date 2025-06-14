@@ -1,6 +1,6 @@
 package lk.ijse.gdse.Model;
 
-public class EmployeeModel {
+public class EmployeeAndAdminModel {
     private int complain_id;
     private String status;
     private String title;
@@ -8,8 +8,9 @@ public class EmployeeModel {
     private int user_id;
     private String created_at;
     private String updated_at;
+    private String remark;
 
-    public EmployeeModel(int complain_id, String status, String title, String description, int user_id, String created_at, String updated_at) {
+    public EmployeeAndAdminModel(int complain_id, String status, String title, String description, int user_id, String created_at, String updated_at, String remark) {
         this.complain_id = complain_id;
         this.status = status;
         this.title = title;
@@ -17,9 +18,18 @@ public class EmployeeModel {
         this.user_id = user_id;
         this.created_at = created_at;
         this.updated_at = updated_at;
+        this.remark = remark;
     }
 
-    public EmployeeModel() {
+    public EmployeeAndAdminModel() {
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public int getComplain_id() {
