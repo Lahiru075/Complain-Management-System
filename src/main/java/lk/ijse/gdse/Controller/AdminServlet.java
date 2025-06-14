@@ -13,6 +13,7 @@ import lk.ijse.gdse.Model.EmployeeAndAdminModel;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 @WebServlet("/admin")
@@ -24,30 +25,37 @@ public class AdminServlet extends HttpServlet{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
 
-        EmployeeDao employeeDao = new EmployeeDao(dataSource);
-        String userIdStr = (String) req.getSession().getAttribute("user_id");
-        int userId = Integer.parseInt(userIdStr);
+        AdminDao adminDao = new AdminDao(this.dataSource);
 
         if ("update".equals(action)) {
             int complaintId = Integer.parseInt(req.getParameter("complaint_id"));
             String title = req.getParameter("title");
             String description = req.getParameter("description");
+            String status = req.getParameter("status");
+            String remark = req.getParameter("remark");
+            int user_id = Integer.parseInt(req.getParameter("user_id"));
+            String created_at = req.getParameter("created_at");
 
             EmployeeAndAdminModel employeeModel = new EmployeeAndAdminModel();
             employeeModel.setComplain_id(complaintId);
             employeeModel.setTitle(title);
             employeeModel.setDescription(description);
-            employeeModel.setUser_id(userId);
+            employeeModel.setUser_id(user_id);
+            employeeModel.setStatus(status);
+            employeeModel.setRemark(remark);
+            employeeModel.setCreated_at(created_at);
 
-            int result = employeeDao.updateComplaint(employeeModel);
+
+            int result = adminDao.updateComplaint(employeeModel);
             if (result > 0) {
                 req.getSession().setAttribute("msg", "Complaint updated successfully");
             } else {
                 req.getSession().setAttribute("msg", "Failed to update complaint");
             }
         } else if ("delete".equals(action)) {
+
             int complaintId = Integer.parseInt(req.getParameter("complaint_id"));
-            int result = employeeDao.deleteComplaint(complaintId);
+            int result = adminDao.deleteComplaint(complaintId);
             if (result > 0) {
                 req.getSession().setAttribute("msg", "Complaint deleted successfully");
             } else {

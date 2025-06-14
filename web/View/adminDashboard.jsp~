@@ -343,7 +343,7 @@
         }
 
         .status-in_progress {
-            background: #cde3f8;
+            background: #81a3c5;
             color: #004085;
             border: 1px solid #99ccff;
         }

@@ -342,8 +342,8 @@
             border: 1px solid #c3e6cb;
         }
 
-        .status-in-progress {
-            background: #cce5ff;
+        .status-in_progress {
+            background: #cde3f8;
             color: #004085;
             border: 1px solid #99ccff;
         }
@@ -504,6 +504,7 @@
             <h2>🔧 Manage Complaint</h2>
             <form action="${pageContext.request.contextPath}/admin" method="post">
                 <input type="hidden" name="complaint_id" id="complaint_id" value="">
+                <input type="hidden" name="created_at" id="created_at" value="">
 
                 <div class="form-row">
                     <div class="form-group">
@@ -513,10 +514,9 @@
                     <div class="form-group">
                         <label for="status">📊 Status:</label>
                         <select id="status" name="status" required>
-                            <option value="">Select Status</option>
-                            <option value="Pending">🟡 Pending</option>
-                            <option value="In Progress">🔵 In Progress</option>
-                            <option value="Resolved">🟢 Resolved</option>
+                            <option value="PENDING">Pending</option>
+                            <option value="IN_PROGRESS">In Progress</option>
+                            <option value="RESOLVED">Resolved</option>
                         </select>
                     </div>
                 </div>
@@ -555,10 +555,9 @@
             <div class="filter-group">
                 <label for="statusFilter">🔍 Filter by Status:</label>
                 <select id="statusFilter">
-                    <option value="">All Status</option>
-                    <option value="Pending">Pending</option>
-                    <option value="In Progress">In Progress</option>
-                    <option value="Resolved">Resolved</option>
+                    <option value="PENDING">Pending</option>
+                    <option value="IN_PROGRESS">In Progress</option>
+                    <option value="RESOLVED">Resolved</option>
                 </select>
             </div>
             <div class="filter-group">
@@ -590,7 +589,7 @@
                         if (complaintList != null && !complaintList.isEmpty()) {
                             for (EmployeeAndAdminModel c : complaintList) {
                     %>
-                    <tr onclick="selectComplaint('<%= c.getComplain_id() %>', '<%= c.getUser_id() %>', '<%= c.getTitle() %>', '<%= c.getDescription() %>', '<%= c.getRemark() %>', '<%= c.getStatus() %>')">
+                    <tr onclick="selectComplaint('<%= c.getComplain_id() %>', '<%= c.getUser_id() %>', '<%= c.getTitle() %>', '<%= c.getDescription() %>', '<%= c.getRemark() %>', '<%= c.getStatus() %>', '<%= c.getCreated_at() %>')">
                         <td><%= c.getComplain_id() %></td>
                         <td><%= c.getUser_id() %></td>
                         <td><%= c.getTitle() %></td>
@@ -631,13 +630,14 @@
         document.getElementById('deleteBtn').disabled = false;
     }
 
-    function selectComplaint(id, userId, title, description, remark, status) {
+    function selectComplaint(id, userId, title, description, remark, status, created_at) {
         document.getElementById('complaint_id').value = id;
         document.getElementById('user_id').value = userId;
         document.getElementById('title').value = title;
         document.getElementById('description').value = description;
         document.getElementById('remark').value = remark || '';
         document.getElementById('status').value = status;
+        document.getElementById('created_at').value = created_at;
         document.getElementById('updateBtn').disabled = false;
         document.getElementById('deleteBtn').disabled = false;
 
