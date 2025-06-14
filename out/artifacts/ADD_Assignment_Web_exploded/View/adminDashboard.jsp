@@ -43,29 +43,23 @@
             min-height: 100vh;
         }
 
+        /*.header {*/
+        /*    background: linear-gradient(135deg, #8e44ad, #e74c3c);*/
+        /*    color: white;*/
+        /*    padding: 30px;*/
+        /*    text-align: center;*/
+        /*    position: relative;*/
+        /*    overflow: hidden;*/
+        /*}*/
+
         .header {
-            background: linear-gradient(135deg, #8e44ad, #e74c3c);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 30px;
-            text-align: center;
+            padding: 20px;
             position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
             overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            animation: shimmer 3s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
         }
 
         .header h1 {
@@ -123,7 +117,7 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, #e74c3c, #f39c12, #27ae60);
+            background: linear-gradient(90deg, #3c72e7, #1283f3, #27aeaa);
         }
 
         .stat-number {
@@ -162,7 +156,7 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, #8e44ad, #e74c3c, #f39c12);
+            background: linear-gradient(90deg, #8e44ad, #3ca5e7, #1230f3);
         }
 
         .form-section h2 {
@@ -401,6 +395,40 @@
             background: white;
         }
 
+        .logout-btn {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.25);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-50%) translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .logout-btn:active {
+            transform: translateY(-50%) translateY(0px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
         @media (max-width: 768px) {
             .stats-section {
                 grid-template-columns: 1fr;
@@ -464,9 +492,15 @@
 
     <!-- Header Section -->
     <div class="header">
-        <div class="admin-badge">👑 ADMIN PANEL</div>
         <h1>🛡️ Admin Dashboard</h1>
         <p>Complaint Management System - Administrative Control</p>
+        <form action="${pageContext.request.contextPath}/logout" method="post">
+            <button class="logout-btn" type="submit">
+                <span class="logout-icon">🚪</span>
+                Logout
+            </button>
+        </form>
+
     </div>
 
     <div class="main-content">

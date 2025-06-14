@@ -69,13 +69,10 @@ public class AdminServlet extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("This is get method of Admin Servlet");
-
-
+        
         try {
             List<EmployeeAndAdminModel> complaints = new AdminDao(this.dataSource).getAllComplainsForAdmin();
 
-            System.out.println(complaints.size());
 
             req.setAttribute("complaints", complaints);
             req.getRequestDispatcher("View/adminDashboard.jsp").forward(req, resp);

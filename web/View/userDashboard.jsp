@@ -47,8 +47,11 @@
         .header {
             background: linear-gradient(135deg, #2c3e50, #3498db);
             color: white;
-            padding: 30px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             text-align: center;
+            overflow: hidden;
         }
 
         .header h1 {
@@ -272,6 +275,40 @@
             color: #155724;
         }
 
+        .logout-btn {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.25);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-50%) translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .logout-btn:active {
+            transform: translateY(-50%) translateY(0px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
         @media (max-width: 768px) {
             .container {
                 margin: 10px;
@@ -322,6 +359,12 @@
     <div class="header">
         <h1>🎯 User Dashboard</h1>
         <p>Complaint Management System</p>
+        <form action="${pageContext.request.contextPath}/logout" method="post">
+            <button class="logout-btn" type="submit">
+                <span class="logout-icon">🚪</span>
+                Logout
+            </button>
+        </form>
     </div>
 
     <div class="main-content">
@@ -436,6 +479,9 @@
         document.getElementById('description').value = description;
         document.getElementById('updateBtn').disabled = false;
         document.getElementById('deleteBtn').disabled = false;
+
+        document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
+
     }
 
 </script>
