@@ -76,6 +76,7 @@ public class EmployeeServlet extends HttpServlet {
 
                 if (isPending) {
                     req.getSession().setAttribute("msg", "This complaint already in resolved state.. you can't delete");
+                    return;
                 } else {
                     int result = employeeDao.deleteComplaint(complaintId);
                     if (result > 0) {

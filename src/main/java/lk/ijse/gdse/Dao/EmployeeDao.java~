@@ -89,7 +89,7 @@ public class EmployeeDao {
 
             if (resultSet.next()) {
                 String status = resultSet.getString("status");
-                return status.equals("RESOLVED");
+                return !status.equals("RESOLVED");
             }
 
             return false;
