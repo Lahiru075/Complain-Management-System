@@ -30,7 +30,8 @@ This is a full-stack web application that handles user authentication and compla
 
 ## 🧱 Project Structure
 
-src/main/
+<pre>
+   src/main/
 ├── java/lk/ijse/gdse/
 │ ├── Controller/
 │ │ ├── AdminServlet.java
@@ -58,7 +59,7 @@ src/main/
 │ ├── signUp.jsp
 │ ├── userDashboard.jsp
 │ └── adminDashboard.jsp
-
+</pre>
 
 
 
