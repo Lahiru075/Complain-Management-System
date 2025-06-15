@@ -53,7 +53,7 @@
         /*}*/
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #764ba2, #667eea);
             color: white;
             padding: 20px;
             position: relative;
