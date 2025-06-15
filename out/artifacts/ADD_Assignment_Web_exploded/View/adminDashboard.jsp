@@ -367,32 +367,130 @@
         }
 
         .filter-section {
-            background: linear-gradient(135deg, #ecf0f1, #bdc3c7);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 25px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             display: flex;
-            gap: 15px;
-            align-items: center;
             flex-wrap: wrap;
+            gap: 20px;
+            align-items: end;
+            margin-bottom: 20px;
         }
 
         .filter-group {
             display: flex;
-            align-items: center;
-            gap: 10px;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 200px;
+            flex: 1;
         }
 
         .filter-group label {
             font-weight: 600;
-            color: #2c3e50;
+            color: #4a5568;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .filter-group select {
-            padding: 8px 12px;
-            border: 1px solid #bdc3c7;
-            border-radius: 5px;
+        .filter-group select,
+        .filter-group input {
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 14px;
             background: white;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .filter-group input::placeholder {
+            color: #a0aec0;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            align-items: end;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .search-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .search-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(102, 126, 234, 0.4);
+        }
+
+        .clear-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .clear-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+        }
+
+        .clear-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-icon {
+            font-size: 16px;
         }
 
         .logout-btn {
@@ -584,19 +682,25 @@
             </form>
         </div>
 
-        <!-- Filter Section -->
         <div class="filter-section">
             <div class="filter-group">
                 <label for="statusFilter">🔍 Filter by Status:</label>
-                <select id="statusFilter">
+                <select id="statusFilter" name="statusFilter">
                     <option value="PENDING">Pending</option>
                     <option value="IN_PROGRESS">In Progress</option>
                     <option value="RESOLVED">Resolved</option>
                 </select>
             </div>
-            <div class="filter-group">
-                <label for="userFilter">👤 Filter by User:</label>
-                <input type="text" id="userFilter" placeholder="Enter User ID..." onkeyup="filterTable()">
+            <div class="button-group">
+                <button class="btn search-btn" value="search" name="action">
+                    <span class="btn-icon">🔍</span>
+                    Search
+                </button>
+
+                <button class="btn clear-btn" value="clear" name="action">
+                    <span class="btn-icon">🗑️</span>
+                    Clear
+                </button>
             </div>
         </div>
 

@@ -442,7 +442,12 @@
                         <td><%= c.getRemark() %></td>
                         <td><%= c.getTitle() %></td>
                         <td><%= c.getDescription() %></td>
-                        <td><%= c.getStatus() %></td>
+<%--                        <td><%= c.getStatus() %></td>--%>
+                        <td>
+                            <span class="status status-<%= c.getStatus().toLowerCase().replace(" ", "-") %>">
+                                <%= c.getStatus() %>
+                            </span>
+                        </td>
                         <td><%= c.getCreated_at() %></td>
                         <td><%= c.getUpdated_at() %></td>
                     </tr>
@@ -479,6 +484,9 @@
         document.getElementById('description').value = description;
         document.getElementById('updateBtn').disabled = false;
         document.getElementById('deleteBtn').disabled = false;
+
+        document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
+
     }
 
 </script>

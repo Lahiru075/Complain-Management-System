@@ -243,19 +243,31 @@
             text-transform: uppercase;
         }
 
+        .status {
+            padding: 8px 15px;
+            border-radius: 25px;
+            font-size: 0.85em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
         .status-pending {
             background: #fff3cd;
             color: #856404;
+            border: 1px solid #ffeaa7;
         }
 
         .status-resolved {
-            background: #d1edff;
-            color: #0c5460;
-        }
-
-        .status-in-progress {
             background: #d4edda;
             color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-in_progress {
+            background: #cde3f8;
+            color: #004085;
+            border: 1px solid #99ccff;
         }
 
         .no-data {
@@ -442,7 +454,12 @@
                         <td><%= c.getRemark() %></td>
                         <td><%= c.getTitle() %></td>
                         <td><%= c.getDescription() %></td>
-                        <td><%= c.getStatus() %></td>
+<%--                        <td><%= c.getStatus() %></td>--%>
+                        <td>
+                            <span class="status status-<%= c.getStatus().toLowerCase().replace(" ", "-") %>">
+                                <%= c.getStatus() %>
+                            </span>
+                        </td>
                         <td><%= c.getCreated_at() %></td>
                         <td><%= c.getUpdated_at() %></td>
                     </tr>
@@ -450,7 +467,7 @@
                         }
                     } else {
                     %>
-                    <tr><td colspan="7">No complaints found.</td></tr>
+                    <tr><td colspan="7" class="no-data">No complaints found.</td></tr>
                     <%
                         }
                     %>

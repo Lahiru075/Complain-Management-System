@@ -17,7 +17,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @WebServlet("/admin")
-public class AdminServlet extends HttpServlet {
+public class AdminServlet extends HttpServlet{
     @Resource(name = "java:comp/env/jdbc/pool")
     private DataSource dataSource;
 
@@ -70,17 +70,29 @@ public class AdminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        try {
-            List<EmployeeAndAdminModel> complaints = new AdminDao(this.dataSource).getAllComplainsForAdmin();
+        String action = req.getParameter("action");
 
+        if ("search".equals(action)) {
+            String status = req.getParameter("status");
+
+            List<EmployeeAndAdminModel> complaints = new AdminDao(this.dataSource).getAllComplainsByStatus(status);
 
             req.setAttribute("complaints", complaints);
             req.getRequestDispatcher("View/adminDashboard.jsp").forward(req, resp);
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
 
+        } else {
+            try {
+                List<EmployeeAndAdminModel> complaints = new AdminDao(this.dataSource).getAllComplainsForAdmin();
+
+
+                req.setAttribute("complaints", complaints);
+                req.getRequestDispatcher("View/adminDashboard.jsp").forward(req, resp);
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 }
