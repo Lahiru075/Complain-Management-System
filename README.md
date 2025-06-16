@@ -104,9 +104,9 @@ This is a full-stack web application that handles user authentication and compla
 
 ## 🧾 Author & Credits
 
-- **Student Name**: *[Your Full Name]*
-- **Batch**: *IJSE GDSE [Your Batch Number]*
-- **Branch**: *[Your Branch]*
+- **Student Name**: *[Lahiru Lakshan Sanjeewa]*
+- **Batch**: *IJSE GDSE [71]*
+- **Branch**: *[Panadura]*
 
 ---
 
