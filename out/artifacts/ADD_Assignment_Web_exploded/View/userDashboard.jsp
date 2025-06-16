@@ -454,7 +454,6 @@
                         <td><%= c.getRemark() %></td>
                         <td><%= c.getTitle() %></td>
                         <td><%= c.getDescription() %></td>
-<%--                        <td><%= c.getStatus() %></td>--%>
                         <td>
                             <span class="status status-<%= c.getStatus().toLowerCase().replace(" ", "-") %>">
                                 <%= c.getStatus() %>

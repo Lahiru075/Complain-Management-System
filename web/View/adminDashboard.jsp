@@ -43,15 +43,6 @@
             min-height: 100vh;
         }
 
-        /*.header {*/
-        /*    background: linear-gradient(135deg, #8e44ad, #e74c3c);*/
-        /*    color: white;*/
-        /*    padding: 30px;*/
-        /*    text-align: center;*/
-        /*    position: relative;*/
-        /*    overflow: hidden;*/
-        /*}*/
-
         .header {
             background: linear-gradient(135deg, #764ba2, #667eea);
             color: white;
@@ -344,7 +335,7 @@
 
         .no-data {
             text-align: center;
-            padding: 60px;
+            padding: 40px;
             color: #6c757d;
             font-style: italic;
             font-size: 1.2em;
